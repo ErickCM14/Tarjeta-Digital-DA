@@ -1,17 +1,23 @@
 <main class="container mt-5">
 
-    <div class="d-flex justify-content-center">
-        <form *ngIf="!this.cargando" [formGroup]="loginForm" (ngSubmit)="guardar()" class="col-6">
+    <div  class="d-flex justify-content-center" >
+        <form *ngIf="cargando == false" [formGroup]="loginForm" (ngSubmit)="login()" class="col-6">
             <h3 class="text-center">Iniciar Sesión</h3>
             <div class="mb-3">
                 <label for="correoForm" class="form-label">Correo</label>
                 <input type="email" formControlName="correo" class="form-control" id="correoForm">
+                <span *ngIf="getErrores('correo')" class="form-text text-danger"> Ingrese un correo valido</span>
             </div>
             <div class="mb-3">
                 <label for="contrasenaForm" class="form-label">Contraseña</label>
                 <input type="password" formControlName="contrasena" class="form-control" id="contrasenaForm">
+                <span *ngIf="getErrores('contrasena')" class="form-text text-danger"> La contraseña debe tener mínimo 6 caracteres</span>
             </div>
-            <input class="btn btn-primary" type="submit" value="Submit">
+            <div class="d-flex justify-content-between" >
+                <a href="" class="btn">¿Olvidaste tu contraseña?</a>
+                <button class="btn btn-primary" type="submit">Entrar</button>
+            </div>
+            
         </form>
     </div>
     
