@@ -16,6 +16,59 @@ export class VisitaComponent implements OnInit {
   token: string | null;
   dia: string | undefined;
   visitaModel: VisitaModel = new VisitaModel;
+  cargando: boolean = true;
+
+  visitaArray = [
+    {
+      imagenContador: "../../../assets/visitas/visita-1.png",
+      imagenRangoContador: "../../../assets/visitas/visita-1-10.png",
+      texto: "primera"
+    },
+    {
+      imagenContador: "../../../assets/visitas/visita-2.png",
+      imagenRangoContador: "../../../assets/visitas/visita-2-10.png",
+      texto: "segunda"
+    },
+    {
+      imagenContador: "../../../assets/visitas/visita-3.png",
+      imagenRangoContador: "../../../assets/visitas/visita-3-10.png",
+      texto: "tercera"
+    },
+    {
+      imagenContador: "../../../assets/visitas/visita-4.png",
+      imagenRangoContador: "../../../assets/visitas/visita-4-10.png",
+      texto: "cuarta"
+    },
+    {
+      imagenContador: "../../../assets/visitas/visita-5.png",
+      imagenRangoContador: "../../../assets/visitas/visita-5-10.png",
+      texto: "quinta"
+    },
+    {
+      imagenContador: "../../../assets/visitas/visita-6.png",
+      imagenRangoContador: "../../../assets/visitas/visita-6-10.png",
+      texto: "sexta"
+    },
+    {
+      imagenContador: "../../../assets/visitas/visita-7.png",
+      imagenRangoContador: "../../../assets/visitas/visita-7-10.png",
+      texto: "séptima"
+    },
+    {
+      imagenContador: "../../../assets/visitas/visita-8.png",
+      imagenRangoContador: "../../../assets/visitas/visita-8-10.png",
+      texto: "octava"
+    },
+    {
+      imagenContador: "../../../assets/visitas/visita-9.png",
+      imagenRangoContador: "../../../assets/visitas/visita-9-10.png",
+      texto: "novena"
+    },
+    {
+      imagenContador: "../../../assets/visitas/visita-10.png",
+      imagenRangoContador: "../../../assets/visitas/visita-10-10.png",
+    }
+  ]
 
   constructor(private _auth: AuthService) {
     this.id = sessionStorage.getItem('idUsuario')
@@ -34,9 +87,11 @@ export class VisitaComponent implements OnInit {
     this.visitaModel.contador = contador;
     this._auth.agregarVisita(this.visitaModel, this.token).subscribe(resp => {
       console.log(resp);
+      this.visitaModel = resp;
+      console.log(this.visitaModel);
+      this.cargando = false;
     }, error => {
       console.log(error);
-      
     })
   }
 
@@ -56,8 +111,12 @@ export class VisitaComponent implements OnInit {
           visitaModelAux.contador++;
           console.log("son distintas");
           this.guardarVisita(id, dia, visitaModelAux.contador)
+        }else{
+          this.visitaModel = resp;
+          console.log(this.visitaModel);
+          this.cargando = false;
         }
-        console.log(resp);
+        
         
       }, error => {
         console.log(error);
