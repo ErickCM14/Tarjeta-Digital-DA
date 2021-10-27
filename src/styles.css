@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+.text-cafe {
+    color: #80563D;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.text-negro {
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.text-verde {
+    color: #3A3E33;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.fondo-cafe {
+    background: #80563D;
+}
+
+.fondo-verde {
+    background: #3A3E33;
+}
