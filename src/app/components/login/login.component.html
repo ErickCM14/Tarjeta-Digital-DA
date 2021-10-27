@@ -1,30 +1,38 @@
-<main class="container mt-5">
+<div class="fondo">
+    <main class="container pt-4 pb-5">
+        <div class="d-flex justify-content-center pb-3">
+            <form *ngIf="cargando == false" [formGroup]="loginForm" (ngSubmit)="login()" class="col-6">
+                <picture class="d-flex justify-content-center">
+                    <img src="../../../assets/tarjeta/dos-arroyos.png" class="w-50" alt="">
+                </picture>
+                <picture>
+                    <img src="../../../assets/tarjeta/bienvenido.png" class="w-100" alt="">
+                </picture>
+                <h3 class="text-center">Inicia sesión</h3>
+                <div class="mb-2">
+                    <label for="correoForm" class="form-label">Correo</label>
+                    <input type="email" formControlName="correo" class="form-control" id="correoForm">
+                    <span *ngIf="getErrores('correo')" class="form-text text-danger"> Ingrese un correo valido</span>
+                </div>
+                <div class="mb-2">
+                    <label for="contrasenaForm" class="form-label">Contraseña</label>
+                    <input type="password" formControlName="contrasena" class="form-control" id="contrasenaForm">
+                    <span *ngIf="getErrores('contrasena')" class="form-text text-danger"> La contraseña debe tener
+                        mínimo 6 caracteres</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a href="" class="btn p-0">¿Olvidaste tu contraseña?</a>
+                    <button class="btn btn-dark" type="submit">Entrar</button>
+                </div>
 
-    <div  class="d-flex justify-content-center" >
-        <form *ngIf="cargando == false" [formGroup]="loginForm" (ngSubmit)="login()" class="col-6">
-            <h3 class="text-center">Iniciar Sesión</h3>
-            <div class="mb-3">
-                <label for="correoForm" class="form-label">Correo</label>
-                <input type="email" formControlName="correo" class="form-control" id="correoForm">
-                <span *ngIf="getErrores('correo')" class="form-text text-danger"> Ingrese un correo valido</span>
-            </div>
-            <div class="mb-3">
-                <label for="contrasenaForm" class="form-label">Contraseña</label>
-                <input type="password" formControlName="contrasena" class="form-control" id="contrasenaForm">
-                <span *ngIf="getErrores('contrasena')" class="form-text text-danger"> La contraseña debe tener mínimo 6 caracteres</span>
-            </div>
-            <div class="d-flex justify-content-between" >
-                <a href="" class="btn">¿Olvidaste tu contraseña?</a>
-                <button class="btn btn-primary" type="submit">Entrar</button>
-            </div>
+                <div class="text-center">
+                    <a href="" class="btn fs-3"><strong>O Registrarte aquí</strong></a>
+                </div>
 
-            <div class="text-center">
-                <a href="" class="btn">O Registrarte aquí</a>
-            </div>
-            
-            
-        </form>
-    </div>
-    
 
-</main>
+            </form>
+        </div>
+
+
+    </main>
+</div>
