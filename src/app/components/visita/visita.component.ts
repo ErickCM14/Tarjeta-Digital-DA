@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class VisitaComponent implements OnInit {
 
-  
+
   fecha: Date = new Date();
   contador: number = 1;
   id: string | null;
@@ -81,47 +81,48 @@ export class VisitaComponent implements OnInit {
     this.obtenerVisita(this.id, this.dia, this.contador)
   }
 
-  guardarVisita(id: string | null, dia: string, contador: number){
+  guardarVisita(id: string | null, dia: string, contador: number) {
     this.visitaModel.id = id;
     this.visitaModel.fecha = dia;
     this.visitaModel.contador = contador;
     this._auth.agregarVisita(this.visitaModel, this.token).subscribe(resp => {
-      console.log(resp);
       this.visitaModel = resp;
-      console.log(this.visitaModel);
       this.cargando = false;
     }, error => {
       console.log(error);
     })
   }
 
-  obtenerVisita(id: string | null, dia: string, contador: number){
-      this._auth.obtenerVisita(id, this.token).subscribe((resp: any) => {
+  obtenerVisita(id: string | null, dia: string, contador: number) {
 
-        let visitaModelAux:VisitaModel = new VisitaModel;
-        if(!resp){
-          console.log("es null");
-          this.guardarVisita(id, dia, contador)
-        }        
+    this._auth.obtenerVisita(id, this.token).subscribe((resp: any) => {
 
-        visitaModelAux.contador = resp['contador'];
-        visitaModelAux.fecha = resp['fecha'];
-         
-        if(this.dia != visitaModelAux.fecha){
-          visitaModelAux.contador++;
-          console.log("son distintas");
-          this.guardarVisita(id, dia, visitaModelAux.contador)
-        }else{
-          this.visitaModel = resp;
-          console.log(this.visitaModel);
-          this.cargando = false;
+      if (!resp) {
+        this.guardarVisita(id, dia, contador)
+        return;
+      }
+
+      this.visitaModel = resp;
+
+      if (this.visitaModel.contador == 10) {
+        this.visitaModel.contador = 0;
+      }
+
+      if (this.dia != this.visitaModel.fecha) {
+        this.visitaModel.contador++;
+        console.log("son distintas");
+        this.guardarVisita(id, dia, this.visitaModel.contador)
+      } else {
+        if (this.visitaModel.contador == 0) {
+          this.visitaModel.contador = 10;
         }
-        
-        
-      }, error => {
-        console.log(error);
-        
-      })
+        this.cargando = false;
+      }
+
+
+    }, error => {
+      console.log(error);
+    })
   }
 
 }
