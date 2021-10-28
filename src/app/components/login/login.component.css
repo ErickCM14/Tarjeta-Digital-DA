@@ -11,12 +11,8 @@
 }
 
 .fondo{
-    /* margin: 0 auto; */
     background-image: url("../../../assets/tarjeta/recurso-19.png");
     background-size: cover;
     background-repeat: no-repeat;
-    /* background-position: center; */
     min-height: 100vh;
-    /* width: 120%; */
-    /* min-height: 100%; */
 }
