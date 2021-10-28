@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { AuthModel } from '../models/auth.model';
 import { VisitaModel } from '../models/visita.model';
+import { ClientesModel } from '../models/clientes.model';
 
 @Injectable({
   providedIn: 'root'
@@ -71,5 +72,41 @@ export class AuthService {
   obtenerVisita(id: string | null, token: string | null) {
     return this.http.get(`${this.realDatabase}/visita/${id}.json`+ this.auth + token);
   }
+  
+  // Metodos de registro
+
+  AddCliente(cliente: ClientesModel) {
+    return this.http.post(`${this.realDatabase}/clientes.json`, cliente)
+      .pipe(
+        map((resp: any) => {
+          cliente.id = resp.name;
+          return cliente;
+        })
+      )
+  }
+
+  getCliente() {
+    return this.http.get(`${this.realDatabase}/clientes.json`)
+      .pipe(
+        map(resp => this.arrCliente(resp))
+      );
+  }
+
+  private arrCliente(clienteOBj: object) {
+    const Clientes: ClientesModel[] = [];
+
+    console.log(clienteOBj);
+    if (clienteOBj === null) { return []; }
+
+    Object.keys(clienteOBj).forEach(key => {
+      const cliente: ClientesModel = clienteOBj[key];
+      cliente.id = key;
+
+      Clientes.push(cliente);
+    });
+
+    return Clientes;
+  }
+
 
 }

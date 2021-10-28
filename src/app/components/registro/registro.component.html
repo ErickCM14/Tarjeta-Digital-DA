@@ -6,15 +6,15 @@
     <div class="cont-form-rg p-0 m-0">
         <h3 class="text-center text-cafe">Crea tu cuenta</h3>
         <p class="text-center text-verde">Ingresa tus datos a continuación</p>
-        <form action="">
+        <form (ngSubmit)="guardar( f )" #f="ngForm" action="">
             <label for="" class="text-negro">Nombre:</label>
-            <input type="text" class="form-control" name="nombre" id="Nombre" required>
+            <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre" id="Nombre" required>
             <label for="" class="text-negro">Teléfono:</label>
-            <input type="text" class="form-control" name="phone" id="Phone" required>
+            <input type="text" class="form-control" [(ngModel)]="cliente.phone" name="phone" id="Phone" required>
             <label for="" class="text-negro">Correo:</label>
-            <input type="text" class="form-control" name="email" id="Email" required>
+            <input type="text" class="form-control" [(ngModel)]="cliente.email" name="email" id="Email" required>
             <label for="" class="text-negro">Contraseña:</label>
-            <input type="text" class="form-control" name="pass" id="Pass" required>
+            <input type="text" class="form-control" [(ngModel)]="cliente.pass" name="pass" id="Pass" required>
 
             <input class="form-check-input mt-3" type="checkbox" value="" id="Terminos" required>
             <label class="form-check-label text-verde mt-3" for="Terminos">
