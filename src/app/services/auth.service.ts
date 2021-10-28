@@ -18,7 +18,7 @@ export class AuthService {
 
   public userToken: any;
 
-  constructor( private http: HttpClient ) { }
+  constructor(private http: HttpClient) { }
 
   Login(usuario: AuthModel) {
 
@@ -30,20 +30,17 @@ export class AuthService {
 
     return this.http.post(
       `${this.apiAuth}`,
-      authData
-    ).pipe(map(resp => {
-      // console.log('Entro al mapa RXJS');
-      this.guardarToken(resp);
-      // this.esAdmin();
-      return resp;
-    })
-    );
+      authData)
+      .pipe(map(resp => {
+        this.guardarToken(resp);
+        return resp;
+      })
+      );
   }
 
   public guardarToken(idToken: any) {
 
     this.userToken = idToken['idToken'];
-    let id = idToken['localId']
 
     sessionStorage.setItem('token', idToken['idToken']);
     sessionStorage.setItem('refresh_token', idToken['refreshToken']);
@@ -70,9 +67,9 @@ export class AuthService {
   };/**Cierra el Registrar datos accesos**/
 
   obtenerVisita(id: string | null, token: string | null) {
-    return this.http.get(`${this.realDatabase}/visita/${id}.json`+ this.auth + token);
+    return this.http.get(`${this.realDatabase}/visita/${id}.json` + this.auth + token);
   }
-  
+
   // Metodos de registro
 
   AddCliente(cliente: ClientesModel) {

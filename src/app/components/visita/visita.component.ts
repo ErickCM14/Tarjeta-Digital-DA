@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { VisitaModel } from 'src/app/models/visita.model';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-visita',
@@ -70,7 +72,7 @@ export class VisitaComponent implements OnInit {
     }
   ]
 
-  constructor(private _auth: AuthService) {
+  constructor(private _auth: AuthService, private router: Router) {
     this.id = sessionStorage.getItem('idUsuario')
     this.token = sessionStorage.getItem('token')
   }
@@ -90,6 +92,7 @@ export class VisitaComponent implements OnInit {
       this.cargando = false;
     }, error => {
       console.log(error);
+      console.log("Mandar a iniciar sesión");
     })
   }
 
@@ -119,9 +122,13 @@ export class VisitaComponent implements OnInit {
         this.cargando = false;
       }
 
-
     }, error => {
-      console.log(error);
+      Swal.fire({
+        title: "Sesión caducada",
+        text: "Su sesión ha caducado, vuelva a iniciar sesión",
+        icon: "info"
+      })
+      this.router.navigateByUrl('/login');
     })
   }
 
