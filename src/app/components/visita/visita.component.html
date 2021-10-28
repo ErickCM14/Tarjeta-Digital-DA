@@ -1,43 +1,45 @@
-<main class="container">
+<div class="fondo">
+    <main class="container pt-4 pb-5">
 
-    <section *ngIf="!cargando" class="d-flex flex-column align-items-center text-center pb-5">
-        <picture>
-            <img src="../../../assets/tarjeta/dos-arroyos.png" class="w-50" alt="">
-        </picture>
-        <picture>
-            <img [src]="visitaArray[visitaModel.contador-1].imagenRangoContador" class="w-100" alt="">
-        </picture>
+        <section *ngIf="!cargando" class="d-flex flex-column align-items-center text-center pb-5">
+            <picture>
+                <img src="../../../assets/tarjeta/dos-arroyos.png" class="w-50" alt="">
+            </picture>
+            <picture>
+                <img [src]="visitaArray[visitaModel.contador-1].imagenRangoContador" class="w-100" alt="">
+            </picture>
 
-        <picture>
-            <img [src]="visitaArray[visitaModel.contador-1].imagenContador" class="w-50" alt="">
-        </picture>
+            <picture>
+                <img [src]="visitaArray[visitaModel.contador-1].imagenContador" class="w-50" alt="">
+            </picture>
 
-        <picture>
-            <img src="../../../assets/tarjeta/bienvenido.png" class="w-50" alt="">
-        </picture>
-        
-        <div *ngIf="visitaModel.contador != 10">
-            <p class="fs-3">
-                Esta es tu {{visitaArray[visitaModel.contador-1].texto}} visita, recuerda
-                que en tu décima visita te
-                regalaremos un menú de adulto.
-            </p>
-            <p class="fs-3">
-                ¡Nos vemos pronto!
-            </p>
-        </div>
+            <picture>
+                <img src="../../../assets/tarjeta/bienvenido.png" class="w-50" alt="">
+            </picture>
 
-        <div *ngIf="visitaModel.contador == 10">
-            <p class="fs-3">
-                Porque nos encanta consentirte te regalaremos un menú de adulto.
-            </p>
-            <p class="fs-3">
-                ¡Disfrútalo!
-            </p>
-        </div>
-        
-        <a href="https://dosarroyos.mx/" class="btn btn-dark w-50" >Volver al inicio</a>
+            <div *ngIf="visitaModel.contador != 10">
+                <p class="fs-3">
+                    Esta es tu {{visitaArray[visitaModel.contador-1].texto}} visita, recuerda
+                    que en tu décima visita te
+                    regalaremos un menú de adulto.
+                </p>
+                <p class="fs-3">
+                    ¡Nos vemos pronto!
+                </p>
+            </div>
 
-    </section>
+            <div *ngIf="visitaModel.contador == 10">
+                <p class="fs-3">
+                    Porque nos encanta consentirte te regalaremos un menú de adulto.
+                </p>
+                <p class="fs-3">
+                    ¡Disfrútalo!
+                </p>
+            </div>
 
-</main>
+            <a href="https://dosarroyos.mx/" class="btn btn-dark w-50">Volver al inicio</a>
+
+        </section>
+
+    </main>
+</div>

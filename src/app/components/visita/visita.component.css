@@ -1,0 +1,6 @@
+.fondo{
+    background-image: url("../../../assets/tarjeta/recurso-19.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
