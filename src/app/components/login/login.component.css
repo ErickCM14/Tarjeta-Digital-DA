@@ -16,3 +16,8 @@
     background-repeat: no-repeat;
     min-height: 100vh;
 }
+
+input{
+    border: none;
+        background: #e5e5e5;
+}

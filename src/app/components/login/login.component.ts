@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthModel } from 'src/app/models/auth.model';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   cargando: boolean = true
 
-  constructor(private _auth: AuthService, private fb: FormBuilder) {
+  constructor(private _auth: AuthService, private fb: FormBuilder, private router: Router) {
     
   }
 
@@ -54,14 +55,63 @@ export class LoginComponent implements OnInit {
     this.loginModel = this.loginForm?.value;
 
     this._auth.Login(this.loginModel).subscribe(resp => {
-      console.log(resp);
+      // console.log(resp);
       Swal.fire({
         title: "Credenciales correctas",
         text: 'Bienvenido a Dos Arroyos',
         icon: "success"
       })
-    }, error => {
-      console.log(error);
+    }, err => {
+      const error = err.error.error.message;
+      switch (error) {
+        case 'EMAIL_NOT_FOUND':
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al autenticar',
+            text: 'El usuario no existe'
+          });
+          break;
+
+        case 'INVALID_PASSWORD':
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al autenticar',
+            text: 'Contraseña incorrecta'
+          });
+          break;
+
+        case 'USER_DISABLED':
+          Swal.fire({
+            icon: 'error',
+            title: 'Usuario inhabilitado',
+            text: 'La cuenta ha sido deshabilitada'
+          });
+          break;
+
+        case 'TOO_MANY_ATTEMPTS_TRY_LATER : Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.':
+        Swal.fire({
+          icon: 'warning',
+          title: 'Cuenta dehabilitada temporalmente',
+          text: 'Realizo demasiados intentos fallidos de inicio de sesión, restablezca su contraseña o intentenlo nuevamente más tarde'
+        });
+        break;
+
+        default:
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al autenticar',
+            text: error
+          });
+          break;
+      }
+    
+
+    }, () => {
+      if(this.loginModel.correo.includes('teamdeveloperss')){
+        this.router.navigateByUrl('/clientes');
+      }else{
+        this.router.navigateByUrl('/visita');
+      }
     })
     
 

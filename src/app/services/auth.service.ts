@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { AuthModel } from '../models/auth.model';
 import { VisitaModel } from '../models/visita.model';
 import { ClientesModel } from '../models/clientes.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  Login(usuario: AuthModel) {
+  Login(usuario: AuthModel): Observable<any> {
 
     const authData = {
       email: usuario.correo,
@@ -50,24 +51,26 @@ export class AuthService {
     sessionStorage.setItem('idUsuario', idToken['localId']);
   }
 
-  agregarVisita(visita: VisitaModel, token: string | null) {
+  agregarVisita(visitaObjeto: any, token: string | null): Observable<any> {
 
-    let visitaData = {
-      contador: visita.contador,
-      fecha: visita.fecha
+    let visita = {
+      visita:{
+        contador: visitaObjeto.contador,
+        fecha: visitaObjeto.fecha
+      }
     };
 
-    return this.http.put(
-      `${this.realDatabase}/visita/${visita.id}.json` + this.auth + token,
-      visitaData
-    ).pipe(
+    return this.http.patch(
+      // `${this.realDatabase}/visita/${visita.id}.json` + this.auth + token, visitaData)
+      `${this.realDatabase}/clientes/${visitaObjeto.id}.json` + this.auth + token, visita)
+      .pipe(
       map((resp: any) => {
         return visita;
       })
     );
-  };/**Cierra el Registrar datos accesos**/
+  };
 
-  obtenerVisita(id: string | null, token: string | null) {
+  obtenerVisita(id: string | null, token: string | null): Observable<any> {
     return this.http.get(`${this.realDatabase}/visita/${id}.json` + this.auth + token);
   }
 
@@ -88,6 +91,10 @@ export class AuthService {
           return cliente;
         })
       )
+  }
+
+  getClienteId(id: string) {
+    return this.http.get(`${this.realDatabase}/clientes/${id}.json`);
   }
 
   getCliente() {
