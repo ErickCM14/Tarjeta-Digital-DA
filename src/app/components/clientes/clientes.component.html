@@ -1,1 +1,30 @@
-<p>clientes works!</p>
+<div class="cont-general-cl">
+    <div class="cont-header-cl">
+        <app-header></app-header>
+    </div>
+    <div class="cont-table-cl">
+        <h2 class="text-negro my-3">Clientes registrados</h2>
+        <div class="table-responsive-sm">
+            <table class="table table-sm table-dark table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Visitas</th>
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+                    <tr *ngFor="let cliente of getClientes; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{cliente.nombre}}</td>
+                        <td>{{cliente.phone}}</td>
+                        <td>{{cliente.email}}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

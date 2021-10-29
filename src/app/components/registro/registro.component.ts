@@ -12,8 +12,7 @@ import { ClientesModel } from '../../models/clientes.model';
 })
 export class RegistroComponent implements OnInit {
   cliente: ClientesModel = new ClientesModel();
-  dirLogin:string = "/login";
-  getClientes: string[] = [];
+  getClientes: any[] = [];
   llamado: any [] = [];
 
   constructor( private AuthService: AuthService) { }
@@ -38,31 +37,38 @@ export class RegistroComponent implements OnInit {
       allowOutsideClick: false
     });
     Swal.showLoading();
-
     let peticion: Observable<any>;
-    
-    
     peticion = this.AuthService.AddCliente(this.cliente);
-    
-   
-    this.getClientes.forEach( element => {if(element == this.cliente.email){
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Parece que este correo ya esta registrado'
-      })
-    }else{
-      peticion.subscribe(resp => {
-        Swal.fire({
-          title: 'Registro exitoso',
-          text: 'Gracias por registrarte',
-          icon: 'success'
-        }).then (function(){
-          window.location.href = "/login"
-        });
-      });
-    }
-  });
 
-  }
+    this.getClientes.filter( el => {
+      if (el === this.cliente.email) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Parece que este correo ya esta registrado'
+        }).then(function(){window.location.href = "/registro"})
+      }  else{
+        peticion.subscribe( resp => {
+          Swal.fire({
+            title:'Registro exitoso',
+            text: 'Gracias por registrarse',
+            icon: 'success'
+          }).then(function(){window.location.href = "/login"})
+        }) 
+      }
+      
+    })
+    
+    if (this.getClientes.length === 0) {
+      peticion.subscribe( resp => {
+        Swal.fire({
+          title:'Registro exitoso',
+          text: 'Gracias por registrarse',
+          icon: 'success'
+        }).then(function(){window.location.href = "/login"})
+      })
+    }
+
+
+  }//termina metodo aguardar
 }

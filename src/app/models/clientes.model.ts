@@ -3,5 +3,5 @@ export class ClientesModel{
     nombre: string;
     phone: number;
     email: string;
-    pass: string;
+    pass: any;
 }
