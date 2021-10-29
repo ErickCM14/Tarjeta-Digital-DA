@@ -15,6 +15,7 @@ export class AuthService {
   private auth = '?auth=';
 
   private apiAuth = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + this.key;
+  private apiSignIn = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+ this.key;
 
   public userToken: any;
 
@@ -71,7 +72,14 @@ export class AuthService {
   }
 
   // Metodos de registro
+  newUser( cliente:ClientesModel){
+    const authData = {
+      ...cliente,
+      returnSecureToken: true
+    };
 
+    return this.http.post( `${this.apiSignIn}`, authData);
+  }
   AddCliente(cliente: ClientesModel) {
     return this.http.post(`${this.realDatabase}/clientes.json`, cliente)
       .pipe(

@@ -37,37 +37,22 @@ export class RegistroComponent implements OnInit {
       allowOutsideClick: false
     });
     Swal.showLoading();
-    let peticion: Observable<any>;
-    peticion = this.AuthService.AddCliente(this.cliente);
-
-    this.getClientes.filter( el => {
-      if (el === this.cliente.email) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Parece que este correo ya esta registrado'
-        }).then(function(){window.location.href = "/registro"})
-      }  else{
-        peticion.subscribe( resp => {
-          Swal.fire({
-            title:'Registro exitoso',
-            text: 'Gracias por registrarse',
-            icon: 'success'
-          }).then(function(){window.location.href = "/login"})
-        }) 
-      }
-      
-    })
     
-    if (this.getClientes.length === 0) {
-      peticion.subscribe( resp => {
+    this.AuthService.newUser(this.cliente)
+      .subscribe( resp => {
         Swal.fire({
-          title:'Registro exitoso',
+          title:'Registro éxitoso',
           text: 'Gracias por registrarse',
           icon: 'success'
         }).then(function(){window.location.href = "/login"})
-      })
-    }
+      }, (err =>{
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Parece que este correo ya esta registrado '
+        }).then(function(){window.location.href = "/registro"})
+      }))
 
 
   }//termina metodo aguardar

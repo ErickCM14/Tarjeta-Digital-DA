@@ -1,3 +1,64 @@
+.cont-general-rg {
+    background-image: url('../../../assets/imagenes-registro/Fondo-Registro.png');
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 120px;
+    padding-bottom: 120px;
+}
+
+.cont-general-rg .cont-cabecera-rg {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cont-general-rg .cont-cabecera-rg .img-logo {
+    width: 30%;
+}
+
+.cont-general-rg .cont-cabecera-rg .img-text {
+    width: 70%;
+}
+
+.cont-general-rg .cont-form-rg h3 {
+    font-weight: 700;
+    font-size: 28px;
+}
+
+.cont-general-rg .cont-form-rg form {
+    padding: 0 40px;
+}
+
+.cont-general-rg .cont-form-rg form .text-negro {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.cont-general-rg .cont-form-rg form input {
+    border: none;
+    background: #e5e5e5;
+}
+
+.cont-general-rg .cont-form-rg form .form-check-input {
+    height: 25px;
+    width: 25px;
+    border-radius: 0;
+    margin-right: 10px;
+}
+
+.cont-general-rg .cont-form-rg form .cont-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.cont-general-rg .cont-form-rg form .cont-btn .btn-crear {
+    background: #3A3E33;
+    color: white;
+    margin-top: 10px;
+}
+
 @media(max-width:700px) {
     .cont-general-rg {
         background-image: url('../../../assets/imagenes-registro/Fondo-Registro.png');
