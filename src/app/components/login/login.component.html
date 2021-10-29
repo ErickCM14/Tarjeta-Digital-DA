@@ -8,20 +8,20 @@
                 <picture>
                     <img src="../../../assets/tarjeta/bienvenido.png" class="w-100" alt="">
                 </picture>
-                <h2 class="text-center" style="color: rgb(129, 87, 64);">Inicia sesión</h2>
+                <h2 class="texto-cafe text-center" style="color: rgb(129, 87, 64);">Inicia sesión</h2>
                 <div class="mb-2">
-                    <label for="correoForm" class="form-label"><strong>Correo:</strong></label>
+                    <label for="correoForm" class="form-label texto-negro"><strong>Correo:</strong></label>
                     <input type="email" formControlName="correo" class="form-control" id="correoForm">
                     <span *ngIf="getErrores('correo')" class="form-text text-danger"> Ingrese un correo valido</span>
                 </div>
                 <div class="mb-2">
-                    <label for="contrasenaForm" class="form-label"><strong>Contraseña:</strong></label>
+                    <label for="contrasenaForm" class="form-label texto-negro"><strong>Contraseña:</strong></label>
                     <input type="password" formControlName="contrasena" class="form-control" id="contrasenaForm">
                     <span *ngIf="getErrores('contrasena')" class="form-text text-danger"> La contraseña debe tener
                         mínimo 6 caracteres</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <a href="" class="btn p-0">¿Olvidaste tu contraseña?</a>
+                    <a href="" class="btn p-0 texto-negro" >¿Olvidaste tu contraseña?</a>
                     <button class="btn btn-dark" type="submit">Entrar</button>
                 </div>
 
