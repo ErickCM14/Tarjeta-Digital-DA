@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthModel } from 'src/app/models/auth.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,14 +14,18 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup | undefined;
   loginModel: AuthModel = new AuthModel;
+  restablecerContrasenaForm: FormGroup;
 
   cargando: boolean = true
 
   constructor(private _auth: AuthService, private fb: FormBuilder, private router: Router) {
-    
+
   }
 
   ngOnInit(): void {
+    this.restablecerContrasenaForm = new FormGroup({
+      restablecerContrasena: new FormControl(null, [Validators.email, Validators.required])
+    })
     this.inicializar()
   }
 
@@ -35,6 +39,10 @@ export class LoginComponent implements OnInit {
 
   getErrores(campo: string) {
     return this.loginForm?.controls[campo].errors && this.loginForm?.controls[campo].touched;
+  }
+
+  getErroresRestablecer(campo: string) {
+    return this.restablecerContrasenaForm.controls[campo].errors && this.restablecerContrasenaForm.controls[campo].touched;
   }
 
 
@@ -89,12 +97,12 @@ export class LoginComponent implements OnInit {
           break;
 
         case 'TOO_MANY_ATTEMPTS_TRY_LATER : Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.':
-        Swal.fire({
-          icon: 'warning',
-          title: 'Cuenta dehabilitada temporalmente',
-          text: 'Realizo demasiados intentos fallidos de inicio de sesión, restablezca su contraseña o intentenlo nuevamente más tarde'
-        });
-        break;
+          Swal.fire({
+            icon: 'warning',
+            title: 'Cuenta dehabilitada temporalmente',
+            text: 'Realizo demasiados intentos fallidos de inicio de sesión, restablezca su contraseña o intentenlo nuevamente más tarde'
+          });
+          break;
 
         default:
           Swal.fire({
@@ -104,17 +112,76 @@ export class LoginComponent implements OnInit {
           });
           break;
       }
-    
+
 
     }, () => {
-      if(this.loginModel.correo.includes('teamdeveloperss')){
+      if (this.loginModel.correo.includes('teamdeveloperss')) {
         this.router.navigateByUrl('/clientes');
-      }else{
+      } else {
         this.router.navigateByUrl('/visita');
       }
     })
-    
+
 
   }
+
+
+
+  restablecerContrasena() {
+
+    if (this.restablecerContrasenaForm.invalid) {
+      this.restablecerContrasenaForm.markAllAsTouched()
+      return;
+    }
+
+    const correo = this.restablecerContrasenaForm.value.restablecerContrasena;
+
+    Swal.fire({
+      icon: 'question',
+      title: `¿Seguro que quiere restablecer su contraseña?`,
+      text: `Se enviara un enlace para restablecer contraseña al correo ${correo}`,
+      showConfirmButton: true,
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Aceptar'
+    }).then(resp => {
+      if (resp.value) {
+
+        Swal.fire({
+          allowOutsideClick: false,
+          icon: 'info',
+          text: 'Espere por favor...'
+        });
+        Swal.showLoading();
+        this._auth.correoRestablecimientoContrasena(correo).subscribe(resp => {
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Se ha enviado el email',
+            text: `Revise su correo y haga clic en el enlace para restablecer su contraseña`
+          })
+          this.restablecerContrasenaForm.reset()
+        }, (error) => {
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Email no existe',
+            text: `El correo ingresado no existe`
+          })
+          this.restablecerContrasenaForm.reset()
+          document.getElementById('restablecerContrasena').click();
+
+        }, () => {
+          document.getElementById('restablecerContrasena').click();
+        })
+      }
+
+    })
+
+  }
+
+
+
+
 
 }

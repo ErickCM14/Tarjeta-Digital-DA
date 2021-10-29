@@ -21,13 +21,49 @@
                         mínimo 6 caracteres</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <a href="" class="btn p-0 texto-negro" >¿Olvidaste tu contraseña?</a>
+                    <a href="" class="restablecer p-0 texto-negro" data-bs-toggle="modal" data-bs-target="#restablecerContrasena"
+                    data-bs-whatever="@restablecerContrasena">¿Olvidaste tu contraseña?</a>
                     <button class="btn btn-dark" type="submit">Entrar</button>
                 </div>
 
                 <div class="text-center">
                     <a [routerLink]="['/registro']" class="btn form-text fs-3"><strong>O Registrate aquí</strong></a>
                 </div>
+
+
+
+                <!-- Restablecer contraseña -->
+
+                <div class="modal fade" id="restablecerContrasena" tabindex="-1"
+                    aria-labelledby="restablecerContrasenaLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-dark" id="restablecerContrasenaModalLabel">Restablecer
+                                    contraseña
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form [formGroup]="restablecerContrasenaForm" (ngSubmit)="restablecerContrasena()">
+                                    <div class="mb-3">
+                                        <input type="email" class="form-control" id="restablecer-Contrasena"
+                                            placeholder="Ingrese su correo" formControlName="restablecerContrasena"
+                                            required>
+                                        <span *ngIf="getErroresRestablecer('restablecerContrasena')" class="form-text text-danger"> Ingrese un correo valido</span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary"
+                                    (click)="restablecerContrasena()">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
 
             </form>

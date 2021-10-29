@@ -118,16 +118,13 @@ export class VisitaComponent implements OnInit {
       }
       
       this.visitaModel = this.clienteModel.visita
-      // console.log(this.visitaModel);
-      
-
+  
       if (this.clienteModel.visita.contador == 10) {
         this.clienteModel.visita.contador = 0;
       }
 
       if (this.dia != this.clienteModel.visita.fecha) {
         this.clienteModel.visita.contador++;
-        // console.log("son distintas");
         this.guardarVisita(id, dia, this.clienteModel.visita.contador)
       } else {
         if (this.clienteModel.visita.contador == 0) {

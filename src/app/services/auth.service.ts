@@ -14,6 +14,7 @@ export class AuthService {
   private key: string = `AIzaSyAkdG1ayXiDaoqHirWwaU50-44VV_R7QcA`;
   private realDatabase: string = 'https://tarjetadigitalda-default-rtdb.firebaseio.com';
   private auth = '?auth=';
+  private correoRestablecimiento = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=` + this.key;
 
   private apiAuth = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + this.key;
   private apiSignIn = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+ this.key;
@@ -51,6 +52,14 @@ export class AuthService {
     sessionStorage.setItem('idUsuario', idToken['localId']);
   }
 
+  correoRestablecimientoContrasena(correo: string) {
+    const body = {
+      "requestType": "PASSWORD_RESET",
+      "email": correo
+    }
+    return this.http.post(this.correoRestablecimiento, body);
+  }
+
   agregarVisita(visitaObjeto: any, token: string | null): Observable<any> {
 
     let visita = {
@@ -61,7 +70,6 @@ export class AuthService {
     };
 
     return this.http.patch(
-      // `${this.realDatabase}/visita/${visita.id}.json` + this.auth + token, visitaData)
       `${this.realDatabase}/clientes/${visitaObjeto.id}.json` + this.auth + token, visita)
       .pipe(
       map((resp: any) => {

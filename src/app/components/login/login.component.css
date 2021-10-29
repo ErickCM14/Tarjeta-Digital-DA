@@ -19,5 +19,15 @@
 
 input{
     border: none;
-        background: #e5e5e5;
+    background: #e5e5e5;
+}
+
+input:focus{
+    border: none;
+    background: #e5e5e5;
+}
+
+.restablecer{
+    text-decoration: none;
+    color: black;
 }
